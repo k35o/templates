@@ -10,6 +10,7 @@ import {
   NPMRC,
   RELEASE_YML,
 } from './shared.ts';
+import { TOOLS, VERSIONS } from './versions.ts';
 
 // Single-package repo: pnpm-workspace.yaml carries the supply-chain rules only.
 const PNPM_WORKSPACE = `blockExoticSubdeps: true
@@ -35,7 +36,6 @@ const TSCONFIG = `{
     "module": "ESNext",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
-    "customConditions": ["source"],
     "lib": ["ES2023"],
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -124,8 +124,11 @@ jobs:
       - name: Build
         run: pnpm build
 
-      - name: Run check (fmt + lint + typecheck)
+      - name: Run check (fmt + lint)
         run: pnpm check
+
+      - name: Typecheck
+        run: pnpm typecheck
 
   tests:
     name: Tests
@@ -247,24 +250,23 @@ export const produceLibrary = (options: GenerateOptions) => {
       prepublishOnly: 'pnpm build',
     },
     devDependencies: {
-      '@changesets/changelog-github': '0.7.0',
-      '@changesets/cli': '2.31.0',
-      '@k8o/oxc-config': '0.1.3',
-      '@types/node': '24.12.4',
-      typescript: '6.0.3',
-      'vite-plus': '0.1.23',
+      '@changesets/changelog-github': VERSIONS['@changesets/changelog-github'],
+      '@changesets/cli': VERSIONS['@changesets/cli'],
+      '@k8o/oxc-config': VERSIONS['@k8o/oxc-config'],
+      '@types/node': VERSIONS['@types/node'],
+      typescript: VERSIONS.typescript,
+      'vite-plus': VERSIONS['vite-plus'],
     },
     engines: {
       node: '>=24.13.0',
     },
-    packageManager: 'pnpm@11.5.1',
+    packageManager: `pnpm@${TOOLS.pnpm}`,
   };
 
+  const intro = description ? `${description}\n\n` : '';
   const readme = `# ${options.name}
 
-${description}
-
-## Install
+${intro}## Install
 
 \`\`\`sh
 pnpm add ${options.name}
@@ -274,7 +276,8 @@ pnpm add ${options.name}
 
 \`\`\`sh
 pnpm install
-pnpm check     # fmt + lint + typecheck
+pnpm check     # fmt + lint
+pnpm typecheck
 pnpm test
 pnpm build     # vp pack -> dist/
 \`\`\`

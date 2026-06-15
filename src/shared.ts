@@ -4,6 +4,8 @@
 // live in ./library.ts and ./web.ts.
 // ---------------------------------------------------------------------------
 
+import { TOOLS } from './versions.ts';
+
 export type GenerateOptions = {
   name: string;
   description?: string | undefined;
@@ -28,6 +30,7 @@ engine-strict=true
 
 export const GITIGNORE = `node_modules
 dist
+*.tgz
 coverage
 *.log
 .DS_Store
@@ -40,8 +43,8 @@ settings.local.json
 `;
 
 export const MISE_TOML = `[tools]
-node = "24.16.0"
-pnpm = "11.5.1"
+node = "${TOOLS.node}"
+pnpm = "${TOOLS.pnpm}"
 `;
 
 export const INSTALL_ACTION = `name: Install
@@ -136,7 +139,7 @@ SOFTWARE.
 `;
 
 export const changesetConfig = (repo: string): string => `{
-  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@3/schema.json",
   "changelog": ["@changesets/changelog-github", { "repo": "${repo}" }],
   "commit": false,
   "fixed": [],
