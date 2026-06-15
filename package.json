@@ -1,6 +1,6 @@
 {
   "name": "@k8o/create",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "k8o's Vite+ project generator — run `vp create @k8o`.",
   "keywords": [
     "bingo-template",
@@ -17,10 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/k35o/templates.git"
   },
-  "bin": "./bin/index.ts",
+  "bin": "./dist/index.mjs",
   "files": [
-    "bin",
-    "src",
+    "dist",
     "README.md",
     "LICENSE"
   ],
@@ -30,6 +29,7 @@
     "provenance": true
   },
   "scripts": {
+    "build": "vp pack",
     "test": "vp test",
     "dev": "node bin/index.ts",
     "check": "vp check",
@@ -37,7 +37,8 @@
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "changeset publish",
+    "release": "pnpm build && changeset publish",
+    "prepublishOnly": "pnpm build",
     "ready": "vp fmt && vp lint && vp test"
   },
   "dependencies": {

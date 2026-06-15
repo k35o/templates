@@ -20,6 +20,14 @@ export default defineConfig({
       },
     ],
   },
+  pack: {
+    // Bundle the TS bin + its local imports into one ESM file. Node refuses to
+    // strip types for files under node_modules, so the published bin must be
+    // JavaScript (bingo / zod stay external and are installed as deps).
+    entry: ['bin/index.ts'],
+    format: 'esm',
+    outDir: 'dist',
+  },
   test: {
     globals: true,
     include: ['tests/**/*.test.ts'],

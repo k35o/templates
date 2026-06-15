@@ -1,14 +1,13 @@
 import { createTemplate } from 'bingo';
 import { z } from 'zod';
 
-import pkgJson from '../package.json' with { type: 'json' };
 import { produceLibrary } from './library.ts';
 import { produceWeb } from './web.ts';
 
 export default createTemplate({
   about: {
-    name: pkgJson.name,
-    description: pkgJson.description,
+    name: '@k8o/create',
+    description: "k8o's Vite+ project generator — run `vp create @k8o`.",
   },
 
   options: {
