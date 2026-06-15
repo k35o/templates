@@ -148,6 +148,9 @@ jobs:
 
   changeset:
     name: Changeset
+    # Dependency bumps (Renovate) and the release PR carry no changeset by design;
+    # skipping the job is treated as success by branch protection.
+    if: github.actor != 'renovate[bot]' && github.head_ref != 'changeset-release/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
