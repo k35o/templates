@@ -11,8 +11,13 @@ export default createTemplate({
   },
 
   options: {
+    // A union of literals (not z.enum) on purpose: bingo's CLI arg parser only
+    // maps ZodString/ZodLiteral/ZodUnion to value-taking flags — a ZodEnum is
+    // dropped, so `--kind web` parses as the boolean `kind: true` and silently
+    // falls through to the library branch. The union keeps the exact
+    // 'library' | 'web' validation while staying CLI-parseable.
     kind: z
-      .enum(['library', 'web'])
+      .union([z.literal('library'), z.literal('web')])
       .describe('What to scaffold: a library or a web (React) package'),
     name: z
       .string()
