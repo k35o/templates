@@ -42,7 +42,7 @@
     "ready": "vp fmt && vp lint && vp test"
   },
   "dependencies": {
-    "bingo": "0.7.0",
+    "bingo": "0.9.3",
     "zod": "3.25.76"
   },
   "devDependencies": {
