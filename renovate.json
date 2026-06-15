@@ -22,6 +22,16 @@
       "groupName": "bingo dependencies"
     },
     {
+      "description": "Pin bingo to 0.7.x: 0.8+/0.9 break the createTemplate/CLI API we rely on.",
+      "matchPackageNames": ["bingo"],
+      "allowedVersions": "<0.8.0"
+    },
+    {
+      "description": "Pin zod to 3.x: bingo 0.7 requires zod ^3 and reads zod-3 schema internals.",
+      "matchPackageNames": ["zod"],
+      "allowedVersions": "<4.0.0"
+    },
+    {
       "matchPackageNames": ["/^@changesets/"],
       "groupName": "changesets dependencies"
     },
