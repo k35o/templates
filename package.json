@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "bingo": "0.7.0",
-    "zod": "3.25.76"
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.7.0",
