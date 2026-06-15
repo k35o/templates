@@ -5,6 +5,16 @@
     "enabled": true,
     "managerFilePatterns": ["/^mise\\.toml$/"]
   },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^src/versions\\.ts$/"],
+      "matchStrings": [
+        "// renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+[\\w'@/.-]+:\\s*'(?<currentValue>[^']+)'"
+      ],
+      "datasourceTemplate": "{{{datasource}}}"
+    }
+  ],
   "prConcurrentLimit": 10,
   "packageRules": [
     {

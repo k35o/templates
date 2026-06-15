@@ -10,6 +10,7 @@ import {
   NPMRC,
   RELEASE_YML,
 } from './shared.ts';
+import { TOOLS, VERSIONS } from './versions.ts';
 
 const COMMITLINT = `export default { extends: ['@commitlint/config-conventional'] };
 `;
@@ -36,23 +37,23 @@ saveExact: true
 autoInstallPeers: false
 
 catalog:
-  '@changesets/changelog-github': 0.7.0
-  '@changesets/cli': 2.31.0
-  '@commitlint/cli': 21.0.2
-  '@commitlint/config-conventional': 21.0.2
-  '@k8o/arte-odyssey': 10.1.0
-  '@k8o/oxc-config': 0.1.3
-  '@tailwindcss/vite': 4.3.0
-  '@types/node': 24.12.4
-  '@types/react': 19.2.15
-  '@types/react-dom': 19.2.3
-  '@vitejs/plugin-react': 6.0.2
-  react: 19.2.6
-  react-dom: 19.2.6
-  tailwindcss: 4.3.0
-  typescript: 6.0.3
-  vite: 8.0.14
-  vite-plus: 0.1.23
+  '@changesets/changelog-github': ${VERSIONS['@changesets/changelog-github']}
+  '@changesets/cli': ${VERSIONS['@changesets/cli']}
+  '@commitlint/cli': ${VERSIONS['@commitlint/cli']}
+  '@commitlint/config-conventional': ${VERSIONS['@commitlint/config-conventional']}
+  '@k8o/arte-odyssey': ${VERSIONS['@k8o/arte-odyssey']}
+  '@k8o/oxc-config': ${VERSIONS['@k8o/oxc-config']}
+  '@tailwindcss/vite': ${VERSIONS['@tailwindcss/vite']}
+  '@types/node': ${VERSIONS['@types/node']}
+  '@types/react': ${VERSIONS['@types/react']}
+  '@types/react-dom': ${VERSIONS['@types/react-dom']}
+  '@vitejs/plugin-react': ${VERSIONS['@vitejs/plugin-react']}
+  react: ${VERSIONS.react}
+  react-dom: ${VERSIONS['react-dom']}
+  tailwindcss: ${VERSIONS.tailwindcss}
+  typescript: ${VERSIONS.typescript}
+  vite: ${VERSIONS.vite}
+  vite-plus: ${VERSIONS['vite-plus']}
 `;
 
 // Root tsconfig for a React monorepo (DOM + JSX). Package tsconfigs extend it.
@@ -103,7 +104,7 @@ export default defineConfig({
       typeAware: true,
     },
     settings: {
-      react: { version: '19.2.6' },
+      react: { version: '${VERSIONS.react}' },
     },
     overrides: [
       {
@@ -407,7 +408,7 @@ export const produceWeb = (options: GenerateOptions) => {
     engines: {
       node: '>=24.13.0',
     },
-    packageManager: 'pnpm@11.5.1',
+    packageManager: `pnpm@${TOOLS.pnpm}`,
   };
 
   const libPackageJson = {
@@ -491,11 +492,10 @@ export const produceWeb = (options: GenerateOptions) => {
     },
   };
 
+  const intro = description ? `${description}\n\n` : '';
   const readme = `# ${bare}
 
-${description}
-
-A React component library built on [@k8o/arte-odyssey](https://github.com/k35o/arte-odyssey).
+${intro}A React component library built on [@k8o/arte-odyssey](https://github.com/k35o/arte-odyssey).
 
 ## Layout
 
