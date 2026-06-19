@@ -16,13 +16,13 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@commitlint/config-conventional
   '@commitlint/config-conventional': '21.0.2',
   // renovate: datasource=npm depName=@k8o/arte-odyssey
-  '@k8o/arte-odyssey': '10.1.0',
+  '@k8o/arte-odyssey': '10.1.1',
   // renovate: datasource=npm depName=@k8o/oxc-config
   '@k8o/oxc-config': '0.1.3',
   // renovate: datasource=npm depName=@tailwindcss/vite
   '@tailwindcss/vite': '4.3.0',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '25.9.2',
+  '@types/node': '25.9.3',
   // renovate: datasource=npm depName=@types/react
   '@types/react': '19.2.17',
   // renovate: datasource=npm depName=@types/react-dom
