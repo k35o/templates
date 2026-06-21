@@ -75,7 +75,9 @@ jobs:
           FILE=".changeset/renovate-${PR_NUMBER}.md"
           {
             echo "---"
-            echo "\"${PKG}\": patch"
+            # Single-quoted: the oxc formatter (vp check) normalizes YAML
+            # frontmatter to single quotes, so double quotes fail CI fmt.
+            echo "'${PKG}': patch"
             echo "---"
             echo ""
             echo "Update bundled dependencies via Renovate."
