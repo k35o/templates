@@ -22,7 +22,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@tailwindcss/vite
   '@tailwindcss/vite': '4.3.0',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '25.9.2',
+  '@types/node': '26.0.1',
   // renovate: datasource=npm depName=@types/react
   '@types/react': '19.2.17',
   // renovate: datasource=npm depName=@types/react-dom
