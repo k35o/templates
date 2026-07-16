@@ -1,5 +1,11 @@
 # @k8o/create
 
+## 0.2.1
+
+### Patch Changes
+
+- [#21](https://github.com/k35o/templates/pull/21) [`f70ebb5`](https://github.com/k35o/templates/commit/f70ebb5d977cb563cf9c17787cba70cd64599585) Thanks [@renovate](https://github.com/apps/renovate)! - Update bundled dependencies via Renovate.
+
 ## 0.2.0
 
 ### Minor Changes
