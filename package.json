@@ -1,6 +1,6 @@
 {
   "name": "@k8o/create",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "k8o's Vite+ project generator — run `vp create @k8o`.",
   "keywords": [
     "bingo-template",
