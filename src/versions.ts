@@ -46,7 +46,7 @@ export const VERSIONS = {
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
 export const TOOLS = {
   // renovate: datasource=node-version depName=node
-  node: '24.16.0',
+  node: '24.18.0',
   // renovate: datasource=npm depName=pnpm
   pnpm: '11.8.0',
 } as const;
