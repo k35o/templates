@@ -1,5 +1,15 @@
 # @k8o/create
 
+## 0.2.2
+
+### Patch Changes
+
+- [#17](https://github.com/k35o/templates/pull/17) [`c78d1fd`](https://github.com/k35o/templates/commit/c78d1fd57737078ea09d37bffbcdf1a41c7cf1e9) Thanks [@renovate](https://github.com/apps/renovate)! - Update bundled dependencies via Renovate.
+
+- [#19](https://github.com/k35o/templates/pull/19) [`44cc4b9`](https://github.com/k35o/templates/commit/44cc4b9433b0b1eb600a1bbe4d5077be9af8d3de) Thanks [@renovate](https://github.com/apps/renovate)! - Update bundled dependencies via Renovate.
+
+- [#20](https://github.com/k35o/templates/pull/20) [`8113f1a`](https://github.com/k35o/templates/commit/8113f1a0ec328afc68253944fe345c2f9cd45568) Thanks [@renovate](https://github.com/apps/renovate)! - Update bundled dependencies via Renovate.
+
 ## 0.2.1
 
 ### Patch Changes
