@@ -1,0 +1,5 @@
+"@k8o/create@0.2.3":
+  dir: ""
+  intents:
+    - ignore-changeset-fmt
+    - switch-release-automation
