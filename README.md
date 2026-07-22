@@ -3,7 +3,7 @@
 k8o's project generator for [Vite+](https://viteplus.dev). One command scaffolds
 a new repository with the conventions already wired in — supply-chain rules,
 oxlint / oxfmt via [`@k8o/oxc-config`](https://github.com/k35o/oxc-config),
-Changesets, GitHub Actions CI/release, mise, and Renovate.
+pnpm release management, GitHub Actions CI/release, mise, and Renovate.
 
 ## Usage
 
@@ -44,7 +44,6 @@ out of the box.
 <name>/
 ├─ src/index.ts
 ├─ tests/index.test.ts
-├─ .changeset/{config.json, README.md}
 ├─ .github/
 │  ├─ composite-actions/install/action.yml
 │  └─ workflows/{ci.yml, release.yml}
@@ -68,7 +67,7 @@ out of the box.
 ├─ apps/playground/        # private Vite app to preview the stack
 │  ├─ src/{main.tsx, app.tsx, styles.css, vite-env.d.ts}
 │  └─ index.html  package.json  tsconfig.json  vite.config.ts
-├─ .changeset/  .github/{composite-actions, workflows}
+├─ .github/{composite-actions, workflows}
 ├─ package.json  pnpm-workspace.yaml (catalog)  tsconfig.json  vite.config.ts
 ├─ commitlint.config.js  .gitignore  .npmrc  mise.toml  renovate.json
 └─ LICENSE  README.md
@@ -82,9 +81,12 @@ out of the box.
   `minimumReleaseAge`, `strictDepBuilds`, `verifyDepsBeforeRun`, `saveExact`,
   `autoInstallPeers: false`.
 - **Lint / format** — `@k8o/oxc-config` presets via `vp check`.
-- **Versioning / release** — Changesets + a `release.yml` that publishes to npm
-  with provenance via OIDC trusted publishing and the `K35O_BOT` GitHub App.
-- **CI** — `ci.yml` (lint / types / tests / changeset) on a composite,
+- **Versioning / release** —
+  [pnpm's built-in release management](https://pnpm.io/versioning) driven by
+  [k35o/pnpm-release-action](https://github.com/k35o/pnpm-release-action), with
+  a `release.yml` that publishes to npm with provenance via OIDC trusted
+  publishing and the `K35O_BOT` GitHub App.
+- **CI** — `ci.yml` (lint / types / tests / change intent) on a composite,
   mise-based install action.
 - **Toolchain** — pinned `mise.toml`, `renovate.json` extending
   `github>k35o/renovate-config`.
@@ -131,5 +133,5 @@ pnpm check       # fmt + lint
 pnpm typecheck
 pnpm test        # generator smoke tests
 pnpm dev -- --kind library --name @k8o/scratch --directory /tmp/scratch --offline
-pnpm changeset   # describe a change before merging
+pnpm change      # describe a change before merging (writes .changeset/<name>.md)
 ```

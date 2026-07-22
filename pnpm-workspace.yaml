@@ -4,8 +4,6 @@ blockExoticSubdeps: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - '@k8o/*'
-  # Renovate security update: pnpm@11.8.0
-  - pnpm@11.8.0
 
 strictDepBuilds: true
 
@@ -16,3 +14,7 @@ verifyDepsBeforeRun: install
 
 saveExact: true
 autoInstallPeers: false
+
+versioning:
+  changelog:
+    storage: repository

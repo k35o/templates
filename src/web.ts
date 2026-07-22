@@ -1,6 +1,4 @@
 import {
-  changesetConfig,
-  CHANGESET_README,
   coords,
   type GenerateOptions,
   GITIGNORE,
@@ -37,8 +35,6 @@ saveExact: true
 autoInstallPeers: false
 
 catalog:
-  '@changesets/changelog-github': ${VERSIONS['@changesets/changelog-github']}
-  '@changesets/cli': ${VERSIONS['@changesets/cli']}
   '@commitlint/cli': ${VERSIONS['@commitlint/cli']}
   '@commitlint/config-conventional': ${VERSIONS['@commitlint/config-conventional']}
   '@k8o/arte-odyssey': ${VERSIONS['@k8o/arte-odyssey']}
@@ -54,6 +50,10 @@ catalog:
   typescript: ${VERSIONS.typescript}
   vite: ${VERSIONS.vite}
   vite-plus: ${VERSIONS['vite-plus']}
+
+versioning:
+  changelog:
+    storage: repository
 `;
 
 // Root tsconfig for a React monorepo (DOM + JSX). Package tsconfigs extend it.
@@ -167,11 +167,11 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-  changeset:
-    name: Changeset
-    # Dependency bumps (Renovate) and the release PR carry no changeset by design;
+  change-intent:
+    name: Change intent
+    # Dependency bumps (Renovate) and the release PR carry no change intent by design;
     # skipping the job is treated as success by branch protection.
-    if: github.actor != 'renovate[bot]' && github.head_ref != 'changeset-release/main'
+    if: \${{ !startsWith(github.head_ref, 'renovate/') && github.head_ref != 'pnpm-release/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -181,11 +181,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install
-        uses: ./.github/composite-actions/install
-
-      - name: Verify a changeset is present
-        run: pnpm exec changeset status --since=origin/main
+      - name: Verify a change intent is present
+        run: |
+          git diff --name-only "origin/\${GITHUB_BASE_REF}"...HEAD \\
+            | grep -E '^\\.changeset/[^/]+\\.md$' \\
+            | grep -v '^\\.changeset/README\\.md$'
 `;
 
 const RENOVATE = `{
@@ -206,10 +206,6 @@ const RENOVATE = `{
       "groupName": "tailwind dependencies"
     },
     {
-      "matchPackageNames": ["/^@changesets/"],
-      "groupName": "changesets dependencies"
-    },
-    {
       "matchPackageNames": ["/^@commitlint/"],
       "groupName": "commitlint dependencies"
     },
@@ -220,10 +216,6 @@ const RENOVATE = `{
     {
       "matchPackageNames": ["/^node$/"],
       "groupName": "node dependencies"
-    },
-    {
-      "matchPackageNames": ["changesets/action"],
-      "enabled": false
     },
     {
       "matchDepTypes": ["peerDependencies"],
@@ -393,14 +385,9 @@ export const produceWeb = (options: GenerateOptions) => {
       typecheck: 'vp run -r typecheck',
       check: 'vp check',
       'check:write': 'vp check --fix',
-      changeset: 'changeset',
-      version: 'changeset version',
-      release: 'pnpm build && changeset publish',
       ready: 'vp fmt && vp lint && vp run -r test',
     },
     devDependencies: {
-      '@changesets/changelog-github': 'catalog:',
-      '@changesets/cli': 'catalog:',
       '@commitlint/cli': 'catalog:',
       '@commitlint/config-conventional': 'catalog:',
       '@k8o/oxc-config': 'catalog:',
@@ -520,8 +507,10 @@ pnpm build      # build every package and app
 
 ## Release
 
-Versioned and published with [Changesets](https://github.com/changesets/changesets).
-Merging to \`main\` lets the release workflow open a version PR and publish to npm.
+Versioned and published with [pnpm's built-in release management](https://pnpm.io/versioning),
+driven in CI by [k35o/pnpm-release-action](https://github.com/k35o/pnpm-release-action).
+Describe changes with \`pnpm change\`; merging to \`main\` lets the release
+workflow open a release PR and publish to npm.
 `;
 
   return {
@@ -537,10 +526,6 @@ Merging to \`main\` lets the release workflow open a version PR and publish to n
       'renovate.json': RENOVATE,
       LICENSE,
       'README.md': readme,
-      '.changeset': {
-        'config.json': changesetConfig(repo),
-        'README.md': CHANGESET_README,
-      },
       '.github': {
         'composite-actions': {
           install: {

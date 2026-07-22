@@ -7,10 +7,6 @@
 // next @k8o/create release ships fresh versions to every newly generated repo.
 
 export const VERSIONS = {
-  // renovate: datasource=npm depName=@changesets/changelog-github
-  '@changesets/changelog-github': '0.7.0',
-  // renovate: datasource=npm depName=@changesets/cli
-  '@changesets/cli': '2.31.0',
   // renovate: datasource=npm depName=@commitlint/cli
   '@commitlint/cli': '21.0.2',
   // renovate: datasource=npm depName=@commitlint/config-conventional
@@ -48,5 +44,5 @@ export const TOOLS = {
   // renovate: datasource=node-version depName=node
   node: '24.18.0',
   // renovate: datasource=npm depName=pnpm
-  pnpm: '11.8.0',
+  pnpm: '11.15.1',
 } as const;
