@@ -33,20 +33,12 @@
       "allowedVersions": "<4.0.0"
     },
     {
-      "matchPackageNames": ["/^@changesets/"],
-      "groupName": "changesets dependencies"
-    },
-    {
       "matchPackageNames": ["/^pnpm$/"],
       "groupName": "pnpm dependencies"
     },
     {
       "matchPackageNames": ["/^node$/"],
       "groupName": "node dependencies"
-    },
-    {
-      "matchPackageNames": ["changesets/action"],
-      "enabled": false
     }
   ]
 }

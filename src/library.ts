@@ -1,6 +1,4 @@
 import {
-  changesetConfig,
-  CHANGESET_README,
   coords,
   type GenerateOptions,
   GITIGNORE,
@@ -28,6 +26,10 @@ verifyDepsBeforeRun: install
 
 saveExact: true
 autoInstallPeers: false
+
+versioning:
+  changelog:
+    storage: repository
 `;
 
 const TSCONFIG = `{
@@ -146,11 +148,11 @@ jobs:
       - name: Run tests
         run: pnpm test
 
-  changeset:
-    name: Changeset
-    # Dependency bumps (Renovate) and the release PR carry no changeset by design;
+  change-intent:
+    name: Change intent
+    # Dependency bumps (Renovate) and the release PR carry no change intent by design;
     # skipping the job is treated as success by branch protection.
-    if: github.actor != 'renovate[bot]' && github.head_ref != 'changeset-release/main'
+    if: \${{ !startsWith(github.head_ref, 'renovate/') && github.head_ref != 'pnpm-release/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -160,11 +162,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Install
-        uses: ./.github/composite-actions/install
-
-      - name: Verify a changeset is present
-        run: pnpm exec changeset status --since=origin/main
+      - name: Verify a change intent is present
+        run: |
+          git diff --name-only "origin/\${GITHUB_BASE_REF}"...HEAD \\
+            | grep -E '^\\.changeset/[^/]+\\.md$' \\
+            | grep -v '^\\.changeset/README\\.md$'
 `;
 
 const RENOVATE = `{
@@ -177,20 +179,12 @@ const RENOVATE = `{
   "prConcurrentLimit": 10,
   "packageRules": [
     {
-      "matchPackageNames": ["/^@changesets/"],
-      "groupName": "changesets dependencies"
-    },
-    {
       "matchPackageNames": ["/^pnpm$/"],
       "groupName": "pnpm dependencies"
     },
     {
       "matchPackageNames": ["/^node$/"],
       "groupName": "node dependencies"
-    },
-    {
-      "matchPackageNames": ["changesets/action"],
-      "enabled": false
     }
   ]
 }
@@ -247,14 +241,9 @@ export const produceLibrary = (options: GenerateOptions) => {
       check: 'vp check',
       'check:write': 'vp check --fix',
       typecheck: 'tsc --noEmit',
-      changeset: 'changeset',
-      version: 'changeset version',
-      release: 'pnpm build && changeset publish',
       prepublishOnly: 'pnpm build',
     },
     devDependencies: {
-      '@changesets/changelog-github': VERSIONS['@changesets/changelog-github'],
-      '@changesets/cli': VERSIONS['@changesets/cli'],
       '@k8o/oxc-config': VERSIONS['@k8o/oxc-config'],
       '@types/node': VERSIONS['@types/node'],
       typescript: VERSIONS.typescript,
@@ -287,13 +276,14 @@ pnpm build     # vp pack -> dist/
 
 ## Release
 
-Versioned and published with [Changesets](https://github.com/changesets/changesets).
+Versioned and published with [pnpm's built-in release management](https://pnpm.io/versioning),
+driven in CI by [k35o/pnpm-release-action](https://github.com/k35o/pnpm-release-action).
 
 \`\`\`sh
-pnpm changeset   # describe the change
+pnpm change   # describe the change (writes .changeset/<name>.md)
 \`\`\`
 
-Merging to \`main\` lets the release workflow open a version PR and publish to npm.
+Merging to \`main\` lets the release workflow open a release PR and publish to npm.
 `;
 
   return {
@@ -308,10 +298,6 @@ Merging to \`main\` lets the release workflow open a version PR and publish to n
       'renovate.json': RENOVATE,
       LICENSE,
       'README.md': readme,
-      '.changeset': {
-        'config.json': changesetConfig(repo),
-        'README.md': CHANGESET_README,
-      },
       '.github': {
         'composite-actions': {
           install: {
