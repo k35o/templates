@@ -3,3 +3,7 @@
   intents:
     - ignore-changeset-fmt
     - switch-release-automation
+"@k8o/create@0.2.4":
+  dir: ""
+  intents:
+    - vite-plus-0-2
