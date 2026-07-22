@@ -32,11 +32,11 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=tailwindcss
   tailwindcss: '4.3.0',
   // renovate: datasource=npm depName=typescript
-  typescript: '7.0.2',
+  typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
   vite: '8.0.16',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '0.1.24',
+  'vite-plus': '0.2.4',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.

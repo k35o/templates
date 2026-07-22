@@ -33,6 +33,12 @@
       "allowedVersions": "<4.0.0"
     },
     {
+      "description": "Hold the generated-project typescript pin on the 6.x line: vite-plus 0.2.x dts tooling (rolldown-plugin-dts) only supports typescript ^5 || ^6, and generated libraries publish .d.mts types so they cannot disable dts. Scoped to src/versions.ts so this repo's own typescript pin is unaffected.",
+      "matchFileNames": ["src/versions.ts"],
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7.0.0"
+    },
+    {
       "matchPackageNames": ["/^pnpm$/"],
       "groupName": "pnpm dependencies"
     },
