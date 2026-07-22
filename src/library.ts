@@ -68,11 +68,13 @@ import { defineConfig } from 'vite-plus';
 export default defineConfig({
   fmt: {
     ...fmt,
-    ignorePatterns: ['CHANGELOG.md'],
+    // pnpm's release management owns CHANGELOG.md and .changeset/ (ledger.yaml
+    // etc.), so the repo's formatting rules must not touch them
+    ignorePatterns: ['CHANGELOG.md', '.changeset'],
   },
   lint: {
     extends: [typescript],
-    ignorePatterns: ['CHANGELOG.md'],
+    ignorePatterns: ['CHANGELOG.md', '.changeset'],
     options: {
       typeAware: true,
     },
