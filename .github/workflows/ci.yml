@@ -20,6 +20,9 @@ jobs:
       - name: Install
         uses: ./.github/composite-actions/install
 
+      - name: Build
+        run: pnpm build
+
       - name: Run check (fmt + lint)
         run: pnpm check
 
