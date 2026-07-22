@@ -7,3 +7,7 @@
   dir: ""
   intents:
     - vite-plus-0-2
+"@k8o/create@0.2.5":
+  dir: ""
+  intents:
+    - generated-vite-plus-0-2
