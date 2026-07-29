@@ -12,7 +12,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@commitlint/config-conventional
   '@commitlint/config-conventional': '21.0.2',
   // renovate: datasource=npm depName=@k8o/arte-odyssey
-  '@k8o/arte-odyssey': '10.1.0',
+  '@k8o/arte-odyssey': '11.0.0',
   // renovate: datasource=npm depName=@k8o/oxc-config
   '@k8o/oxc-config': '0.1.3',
   // renovate: datasource=npm depName=@tailwindcss/vite
