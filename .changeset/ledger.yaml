@@ -20,3 +20,7 @@
   dir: ""
   intents:
     - renovate-38
+"@k8o/create@0.2.8":
+  dir: ""
+  intents:
+    - renovate-40
