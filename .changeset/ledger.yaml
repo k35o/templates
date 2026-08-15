@@ -16,3 +16,7 @@
   intents:
     - release-action-v0-2-1
     - renovate-34
+"@k8o/create@0.2.7":
+  dir: ""
+  intents:
+    - renovate-38
