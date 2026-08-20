@@ -24,3 +24,8 @@
   dir: ""
   intents:
     - renovate-40
+"@k8o/create@0.2.9":
+  dir: ""
+  intents:
+    - renovate-43
+    - renovate-45
