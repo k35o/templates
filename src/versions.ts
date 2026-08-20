@@ -8,35 +8,35 @@
 
 export const VERSIONS = {
   // renovate: datasource=npm depName=@commitlint/cli
-  '@commitlint/cli': '21.0.2',
+  '@commitlint/cli': '21.2.2',
   // renovate: datasource=npm depName=@commitlint/config-conventional
-  '@commitlint/config-conventional': '21.0.2',
+  '@commitlint/config-conventional': '21.2.2',
   // renovate: datasource=npm depName=@k8o/arte-odyssey
-  '@k8o/arte-odyssey': '11.0.0',
+  '@k8o/arte-odyssey': '11.0.1',
   // renovate: datasource=npm depName=@k8o/oxc-config
-  '@k8o/oxc-config': '0.1.3',
+  '@k8o/oxc-config': '0.2.1',
   // renovate: datasource=npm depName=@tailwindcss/vite
-  '@tailwindcss/vite': '4.3.0',
+  '@tailwindcss/vite': '4.3.3',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '26.1.1',
+  '@types/node': '26.2.0',
   // renovate: datasource=npm depName=@types/react
-  '@types/react': '19.2.17',
+  '@types/react': '19.2.18',
   // renovate: datasource=npm depName=@types/react-dom
-  '@types/react-dom': '19.2.3',
+  '@types/react-dom': '19.2.4',
   // renovate: datasource=npm depName=@vitejs/plugin-react
-  '@vitejs/plugin-react': '6.0.2',
+  '@vitejs/plugin-react': '6.0.5',
   // renovate: datasource=npm depName=react
-  react: '19.2.7',
+  react: '19.2.8',
   // renovate: datasource=npm depName=react-dom
-  'react-dom': '19.2.7',
+  'react-dom': '19.2.8',
   // renovate: datasource=npm depName=tailwindcss
-  tailwindcss: '4.3.0',
+  tailwindcss: '4.3.3',
   // renovate: datasource=npm depName=typescript
   typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
-  vite: '8.0.16',
+  vite: '8.2.1',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '0.2.4',
+  'vite-plus': '0.2.9',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
