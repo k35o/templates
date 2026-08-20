@@ -1,6 +1,6 @@
+import type { GenerateOptions } from './shared.ts';
 import {
   coords,
-  type GenerateOptions,
   GITIGNORE,
   INSTALL_ACTION,
   LICENSE,
