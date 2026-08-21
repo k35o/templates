@@ -1,5 +1,13 @@
 # @k8o/create
 
+## 0.2.9
+
+### Patch Changes
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
 ## 0.2.8
 
 ### Patch Changes
