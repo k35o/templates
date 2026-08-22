@@ -14,7 +14,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@k8o/arte-odyssey
   '@k8o/arte-odyssey': '11.0.1',
   // renovate: datasource=npm depName=@k8o/oxc-config
-  '@k8o/oxc-config': '0.2.1',
+  '@k8o/oxc-config': '0.3.0',
   // renovate: datasource=npm depName=@tailwindcss/vite
   '@tailwindcss/vite': '4.3.3',
   // renovate: datasource=npm depName=@types/node
