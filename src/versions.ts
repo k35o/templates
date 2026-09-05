@@ -14,17 +14,17 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@k8o/arte-odyssey
   '@k8o/arte-odyssey': '11.0.1',
   // renovate: datasource=npm depName=@k8o/oxc-config
-  '@k8o/oxc-config': '0.2.1',
+  '@k8o/oxc-config': '0.3.0',
   // renovate: datasource=npm depName=@tailwindcss/vite
   '@tailwindcss/vite': '4.3.3',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '26.2.0',
+  '@types/node': '26.4.0',
   // renovate: datasource=npm depName=@types/react
   '@types/react': '19.2.18',
   // renovate: datasource=npm depName=@types/react-dom
-  '@types/react-dom': '19.2.4',
+  '@types/react-dom': '19.2.5',
   // renovate: datasource=npm depName=@vitejs/plugin-react
-  '@vitejs/plugin-react': '6.0.5',
+  '@vitejs/plugin-react': '6.1.1',
   // renovate: datasource=npm depName=react
   react: '19.2.8',
   // renovate: datasource=npm depName=react-dom
@@ -34,9 +34,9 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=typescript
   typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
-  vite: '8.2.1',
+  vite: '8.2.2',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '0.2.9',
+  'vite-plus': '0.3.0',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
