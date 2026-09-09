@@ -1,3 +1,10 @@
+"@k8o/create@0.2.10":
+  dir: ""
+  intents:
+    - renovate-48
+    - renovate-51
+    - renovate-53
+    - renovate-54
 "@k8o/create@0.2.3":
   dir: ""
   intents:
