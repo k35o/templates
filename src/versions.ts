@@ -44,5 +44,5 @@ export const TOOLS = {
   // renovate: datasource=node-version depName=node
   node: '24.20.0',
   // renovate: datasource=npm depName=pnpm
-  pnpm: '12.2.1',
+  pnpm: '12.3.4',
 } as const;
