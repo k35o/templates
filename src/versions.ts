@@ -22,7 +22,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@types/react
   '@types/react': '19.2.18',
   // renovate: datasource=npm depName=@types/react-dom
-  '@types/react-dom': '19.2.5',
+  '@types/react-dom': '19.2.7',
   // renovate: datasource=npm depName=@vitejs/plugin-react
   '@vitejs/plugin-react': '6.1.1',
   // renovate: datasource=npm depName=react
