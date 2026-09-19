@@ -18,25 +18,25 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@tailwindcss/vite
   '@tailwindcss/vite': '4.3.3',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '26.4.1',
+  '@types/node': '26.5.1',
   // renovate: datasource=npm depName=@types/react
-  '@types/react': '19.2.18',
+  '@types/react': '19.3.0',
   // renovate: datasource=npm depName=@types/react-dom
-  '@types/react-dom': '19.2.5',
+  '@types/react-dom': '19.3.0',
   // renovate: datasource=npm depName=@vitejs/plugin-react
   '@vitejs/plugin-react': '6.1.1',
   // renovate: datasource=npm depName=react
-  react: '19.2.8',
+  react: '19.3.0',
   // renovate: datasource=npm depName=react-dom
-  'react-dom': '19.2.8',
+  'react-dom': '19.3.0',
   // renovate: datasource=npm depName=tailwindcss
   tailwindcss: '4.3.3',
   // renovate: datasource=npm depName=typescript
   typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
-  vite: '8.2.2',
+  vite: '8.3.0',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '0.3.0',
+  'vite-plus': '0.3.1',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
