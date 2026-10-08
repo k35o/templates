@@ -8,17 +8,17 @@
 
 export const VERSIONS = {
   // renovate: datasource=npm depName=@commitlint/cli
-  '@commitlint/cli': '21.2.2',
+  '@commitlint/cli': '21.2.3',
   // renovate: datasource=npm depName=@commitlint/config-conventional
-  '@commitlint/config-conventional': '21.2.2',
+  '@commitlint/config-conventional': '21.2.3',
   // renovate: datasource=npm depName=@k8o/arte-odyssey
   '@k8o/arte-odyssey': '12.0.1',
   // renovate: datasource=npm depName=@k8o/oxc-config
-  '@k8o/oxc-config': '0.3.0',
+  '@k8o/oxc-config': '0.4.0',
   // renovate: datasource=npm depName=@tailwindcss/vite
   '@tailwindcss/vite': '4.3.3',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '26.6.1',
+  '@types/node': '26.6.4',
   // renovate: datasource=npm depName=@types/react
   '@types/react': '19.3.0',
   // renovate: datasource=npm depName=@types/react-dom
@@ -34,7 +34,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=typescript
   typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
-  vite: '8.3.0',
+  vite: '8.3.2',
   // renovate: datasource=npm depName=vite-plus
   'vite-plus': '1.0.0',
 } as const;
