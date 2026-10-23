@@ -4,6 +4,8 @@ blockExoticSubdeps: true
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - '@k8o/*'
+  # Renovate security update: zod@4.6.6
+  - zod@4.6.6
 
 strictDepBuilds: true
 
