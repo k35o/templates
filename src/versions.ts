@@ -34,7 +34,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=typescript
   typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
-  vite: '8.3.0',
+  vite: '8.3.3',
   // renovate: datasource=npm depName=vite-plus
   'vite-plus': '1.0.0',
 } as const;
