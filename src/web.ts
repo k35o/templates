@@ -22,7 +22,9 @@ blockExoticSubdeps: true
 
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
+  - '@better-css-modules/*'
   - '@k8o/*'
+  - '@k8ordo/*'
 
 strictDepBuilds: true
 
@@ -35,18 +37,20 @@ saveExact: true
 autoInstallPeers: false
 
 catalog:
+  '@better-css-modules/cli': ${VERSIONS['@better-css-modules/cli']}
+  '@better-css-modules/core': ${VERSIONS['@better-css-modules/core']}
+  '@better-css-modules/vite': ${VERSIONS['@better-css-modules/vite']}
   '@commitlint/cli': ${VERSIONS['@commitlint/cli']}
   '@commitlint/config-conventional': ${VERSIONS['@commitlint/config-conventional']}
-  '@k8o/arte-odyssey': ${VERSIONS['@k8o/arte-odyssey']}
   '@k8o/oxc-config': ${VERSIONS['@k8o/oxc-config']}
-  '@tailwindcss/vite': ${VERSIONS['@tailwindcss/vite']}
+  '@k8ordo/i18n': ${VERSIONS['@k8ordo/i18n']}
+  '@k8ordo/ui': ${VERSIONS['@k8ordo/ui']}
   '@types/node': ${VERSIONS['@types/node']}
   '@types/react': ${VERSIONS['@types/react']}
   '@types/react-dom': ${VERSIONS['@types/react-dom']}
   '@vitejs/plugin-react': ${VERSIONS['@vitejs/plugin-react']}
   react: ${VERSIONS.react}
   react-dom: ${VERSIONS['react-dom']}
-  tailwindcss: ${VERSIONS.tailwindcss}
   typescript: ${VERSIONS.typescript}
   vite: ${VERSIONS.vite}
   vite-plus: ${VERSIONS['vite-plus']}
@@ -204,8 +208,12 @@ const RENOVATE = `{
       "groupName": "react dependencies"
     },
     {
-      "matchPackageNames": ["/tailwind/"],
-      "groupName": "tailwind dependencies"
+      "matchPackageNames": ["/^@k8ordo/"],
+      "groupName": "k8ordo dependencies"
+    },
+    {
+      "matchPackageNames": ["/^@better-css-modules/"],
+      "groupName": "better-css-modules dependencies"
     },
     {
       "matchPackageNames": ["/^@commitlint/"],
@@ -250,6 +258,9 @@ export default defineConfig({
   test: {
     globals: true,
     include: ['src/**/*.test.{ts,tsx}'],
+    // @k8ordo/ui's components import their CSS, which Node cannot load.
+    // Inlining it runs it through Vite, which handles the CSS imports.
+    server: { deps: { inline: [/@k8ordo\\/ui/u] } },
   },
   staged: {
     '*': 'vp check --fix',
@@ -269,7 +280,7 @@ test('cn joins truthy class names', () => {
 });
 `;
 
-const PKG_HELLO = `import { Button } from '@k8o/arte-odyssey';
+const PKG_HELLO = `import { Button } from '@k8ordo/ui';
 import type { FC } from 'react';
 
 export type HelloProps = {
@@ -278,12 +289,22 @@ export type HelloProps = {
 };
 
 /**
- * Sample component wrapping @k8o/arte-odyssey's Button.
- * Render it inside <ArteOdysseyProvider> (see apps/playground).
+ * Sample component wrapping @k8ordo/ui's Button.
+ * The app loads @k8ordo/ui's stylesheet and renders it inside <UIProvider>
+ * (see apps/playground).
  */
 export const Hello: FC<HelloProps> = ({ name }) => (
   <Button>Hello, {name}!</Button>
 );
+`;
+
+const PKG_HELLO_TEST = `import { renderToString } from 'react-dom/server';
+
+import { Hello } from './hello.tsx';
+
+test('Hello greets the name', () => {
+  expect(renderToString(<Hello name="k8o" />)).toContain('k8o');
+});
 `;
 
 const PKG_INDEX = `export { cn } from './helpers/cn.ts';
@@ -291,23 +312,44 @@ export { Hello } from './components/hello.tsx';
 export type { HelloProps } from './components/hello.tsx';
 `;
 
-// --- apps/playground : private Vite + React app using arte-odyssey -----------
+// --- apps/playground : private Vite + React app using @k8ordo/ui -------------
 
+// rootDirs lets TypeScript read the class names better-css-modules generates
+// into __generated__ for each *.module.css.
 const APP_TSCONFIG = `{
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "vite/client"]
+    "types": ["node", "vite/client"],
+    "rootDirs": [".", "./__generated__"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "vite.config.ts",
+    "better-css-modules.config.ts",
+    "__generated__"
+  ]
 }
 `;
 
-const APP_VITE_CONFIG = `import tailwindcss from '@tailwindcss/vite';
+const APP_VITE_CONFIG = `import betterCssModules from '@better-css-modules/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), betterCssModules()],
+  // @k8ordo/ui's CSS is written for these browsers. Vite's default target
+  // makes Lightning CSS rewrite it for older ones: nesting flattened, :dir()
+  // turned into :lang() selectors that no longer follow dir.
+  build: { cssTarget: ['chrome146', 'edge146', 'firefox151', 'safari26'] },
+});
+`;
+
+const APP_BCM_CONFIG = `import { defineConfig } from '@better-css-modules/core';
+
+export default defineConfig({
+  globalCss: ['./src/styles.css'],
+  layer: 'components',
 });
 `;
 
@@ -342,23 +384,35 @@ if (root) {
 }
 `;
 
-// The playground demonstrates the @k8o/arte-odyssey stack (provider + tailwind).
-// To preview your own package here, add it as a `workspace:*` dependency and
-// import it — its `source` export condition resolves to TS source in dev.
-const APP_APP = `import { ArteOdysseyProvider, Button } from '@k8o/arte-odyssey';
+// The playground demonstrates the @k8ordo/ui stack (provider + CSS Modules on
+// its tokens). To preview your own package here, add it as a `workspace:*`
+// dependency and import it — its `source` export condition resolves to TS
+// source in dev.
+const APP_APP = `import { Button, Heading, UIProvider } from '@k8ordo/ui';
+
+import styles from './app.module.css';
 
 export const App = () => (
-  <ArteOdysseyProvider>
-    <main className="grid min-h-dvh place-items-center gap-4 p-8">
-      <h1 className="text-2xl font-bold">@PKG_NAME@ playground</h1>
+  <UIProvider>
+    <main className={styles.root}>
+      <Heading level="h1">@PKG_NAME@ playground</Heading>
       <Button>Hello, world!</Button>
     </main>
-  </ArteOdysseyProvider>
+  </UIProvider>
 );
 `;
 
-const APP_STYLES = `@import 'tailwindcss';
-@import '@k8o/arte-odyssey/styles.css';
+const APP_MODULE_CSS = `.root {
+  display: grid;
+  place-content: center;
+  place-items: center;
+  gap: calc(var(--spacing) * 4);
+  min-height: 100dvh;
+  padding: calc(var(--spacing) * 8);
+}
+`;
+
+const APP_STYLES = `@import '@k8ordo/ui/styles.css';
 `;
 
 const APP_VITE_ENV = `/// <reference types="vite/client" />
@@ -385,8 +439,8 @@ export const produceWeb = (options: GenerateOptions) => {
       dev: 'vp run --filter ./apps/playground dev',
       test: 'vp run -r test',
       typecheck: 'vp run -r typecheck',
-      check: 'vp check',
-      'check:write': 'vp check --fix',
+      check: 'vp run -r typegen && vp check && vp run -r check:css',
+      'check:write': 'vp run -r typegen && vp check --fix',
       ready: 'vp fmt && vp lint && vp run -r test',
     },
     devDependencies: {
@@ -442,7 +496,8 @@ export const produceWeb = (options: GenerateOptions) => {
       'check:write': 'vp check --fix',
     },
     devDependencies: {
-      '@k8o/arte-odyssey': 'catalog:',
+      '@k8ordo/i18n': 'catalog:',
+      '@k8ordo/ui': 'catalog:',
       '@types/react': 'catalog:',
       '@types/react-dom': 'catalog:',
       '@vitejs/plugin-react': 'catalog:',
@@ -451,7 +506,7 @@ export const produceWeb = (options: GenerateOptions) => {
       'vite-plus': 'catalog:',
     },
     peerDependencies: {
-      '@k8o/arte-odyssey': '>=10',
+      '@k8ordo/ui': '>=2',
       react: '>=19',
       'react-dom': '>=19',
     },
@@ -466,19 +521,23 @@ export const produceWeb = (options: GenerateOptions) => {
       dev: 'vite',
       build: 'vite build',
       preview: 'vite preview',
-      typecheck: 'tsc --noEmit',
+      typegen: 'better-css-modules generate',
+      typecheck: 'better-css-modules generate && tsc --noEmit',
+      'check:css': 'better-css-modules check',
     },
     dependencies: {
-      '@k8o/arte-odyssey': 'catalog:',
+      '@k8ordo/i18n': 'catalog:',
+      '@k8ordo/ui': 'catalog:',
       react: 'catalog:',
       'react-dom': 'catalog:',
     },
     devDependencies: {
-      '@tailwindcss/vite': 'catalog:',
+      '@better-css-modules/cli': 'catalog:',
+      '@better-css-modules/core': 'catalog:',
+      '@better-css-modules/vite': 'catalog:',
       '@types/react': 'catalog:',
       '@types/react-dom': 'catalog:',
       '@vitejs/plugin-react': 'catalog:',
-      tailwindcss: 'catalog:',
       typescript: 'catalog:',
       vite: 'catalog:',
     },
@@ -487,7 +546,7 @@ export const produceWeb = (options: GenerateOptions) => {
   const intro = description ? `${description}\n\n` : '';
   const readme = `# ${bare}
 
-${intro}A React component library built on [@k8o/arte-odyssey](https://github.com/k35o/arte-odyssey).
+${intro}A React component library built on [@k8ordo/ui](https://ordo.k8o.me).
 
 ## Layout
 
@@ -501,7 +560,7 @@ apps/playground    # local Vite app to preview it
 \`\`\`sh
 pnpm install
 pnpm dev        # run the playground app
-pnpm check      # fmt + lint
+pnpm check      # fmt + lint + CSS Modules check (better-css-modules)
 pnpm typecheck
 pnpm test
 pnpm build      # build every package and app
@@ -520,7 +579,7 @@ workflow open a release PR and publish to npm.
       'package.json': `${JSON.stringify(rootPackageJson, null, 2)}\n`,
       'pnpm-workspace.yaml': PNPM_WORKSPACE,
       '.npmrc': NPMRC,
-      '.gitignore': GITIGNORE,
+      '.gitignore': `${GITIGNORE}__generated__\n`,
       'mise.toml': MISE_TOML,
       'tsconfig.json': TSCONFIG,
       'vite.config.ts': ROOT_VITE_CONFIG,
@@ -548,6 +607,7 @@ workflow open a release PR and publish to npm.
             'index.ts': PKG_INDEX,
             components: {
               'hello.tsx': PKG_HELLO,
+              'hello.test.tsx': PKG_HELLO_TEST,
             },
             helpers: {
               'cn.ts': PKG_CN,
@@ -561,10 +621,12 @@ workflow open a release PR and publish to npm.
           'package.json': `${JSON.stringify(appPackageJson, null, 2)}\n`,
           'tsconfig.json': APP_TSCONFIG,
           'vite.config.ts': APP_VITE_CONFIG,
+          'better-css-modules.config.ts': APP_BCM_CONFIG,
           'index.html': APP_INDEX_HTML,
           src: {
             'main.tsx': APP_MAIN,
             'app.tsx': APP_APP.replaceAll('@PKG_NAME@', options.name),
+            'app.module.css': APP_MODULE_CSS,
             'styles.css': APP_STYLES,
             'vite-env.d.ts': APP_VITE_ENV,
           },

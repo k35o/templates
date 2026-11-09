@@ -7,16 +7,22 @@
 // next @k8o/create release ships fresh versions to every newly generated repo.
 
 export const VERSIONS = {
+  // renovate: datasource=npm depName=@better-css-modules/cli
+  '@better-css-modules/cli': '0.4.1',
+  // renovate: datasource=npm depName=@better-css-modules/core
+  '@better-css-modules/core': '0.4.1',
+  // renovate: datasource=npm depName=@better-css-modules/vite
+  '@better-css-modules/vite': '0.4.1',
   // renovate: datasource=npm depName=@commitlint/cli
   '@commitlint/cli': '21.2.2',
   // renovate: datasource=npm depName=@commitlint/config-conventional
   '@commitlint/config-conventional': '21.2.2',
-  // renovate: datasource=npm depName=@k8o/arte-odyssey
-  '@k8o/arte-odyssey': '12.0.1',
   // renovate: datasource=npm depName=@k8o/oxc-config
   '@k8o/oxc-config': '0.3.0',
-  // renovate: datasource=npm depName=@tailwindcss/vite
-  '@tailwindcss/vite': '4.3.3',
+  // renovate: datasource=npm depName=@k8ordo/i18n
+  '@k8ordo/i18n': '2.3.1',
+  // renovate: datasource=npm depName=@k8ordo/ui
+  '@k8ordo/ui': '2.3.1',
   // renovate: datasource=npm depName=@types/node
   '@types/node': '26.6.1',
   // renovate: datasource=npm depName=@types/react
@@ -29,8 +35,6 @@ export const VERSIONS = {
   react: '19.3.0',
   // renovate: datasource=npm depName=react-dom
   'react-dom': '19.3.0',
-  // renovate: datasource=npm depName=tailwindcss
-  tailwindcss: '4.3.3',
   // renovate: datasource=npm depName=typescript
   typescript: '6.0.3',
   // renovate: datasource=npm depName=vite
