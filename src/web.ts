@@ -7,6 +7,8 @@ import {
   MISE_TOML,
   NPMRC,
   RELEASE_YML,
+  VITE_PLUS_CATALOG,
+  VITE_PLUS_WORKSPACE,
 } from './shared.ts';
 import { TOOLS, VERSIONS } from './versions.ts';
 
@@ -52,9 +54,8 @@ catalog:
   react: ${VERSIONS.react}
   react-dom: ${VERSIONS['react-dom']}
   typescript: ${VERSIONS.typescript}
-  vite: ${VERSIONS.vite}
-  vite-plus: ${VERSIONS['vite-plus']}
-
+${VITE_PLUS_CATALOG}
+${VITE_PLUS_WORKSPACE}
 versioning:
   changelog:
     storage: repository
@@ -244,8 +245,7 @@ const PKG_TSCONFIG = `{
 `;
 
 // No @vitejs/plugin-react here: the library runs no dev server to refresh, and
-// Vite compiles its JSX on its own. TypeScript 7 also overflows comparing the
-// plugin's Plugin type (from vite) with the one vite-plus's defineConfig takes.
+// Vite compiles its JSX on its own.
 const PKG_VITE_CONFIG = `import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -335,7 +335,7 @@ const APP_TSCONFIG = `{
 
 const APP_VITE_CONFIG = `import betterCssModules from '@better-css-modules/vite';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
   plugins: [react(), betterCssModules()],
@@ -518,9 +518,9 @@ export const produceWeb = (options: GenerateOptions) => {
     private: true,
     type: 'module',
     scripts: {
-      dev: 'vite',
-      build: 'vite build',
-      preview: 'vite preview',
+      dev: 'vp dev',
+      build: 'vp build',
+      preview: 'vp preview',
       typegen: 'better-css-modules generate',
       typecheck: 'better-css-modules generate && tsc --noEmit',
       'check:css': 'better-css-modules check',
@@ -540,6 +540,7 @@ export const produceWeb = (options: GenerateOptions) => {
       '@vitejs/plugin-react': 'catalog:',
       typescript: 'catalog:',
       vite: 'catalog:',
+      'vite-plus': 'catalog:',
     },
   };
 

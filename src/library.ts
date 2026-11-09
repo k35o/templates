@@ -7,10 +7,13 @@ import {
   MISE_TOML,
   NPMRC,
   RELEASE_YML,
+  VITE_PLUS_CATALOG,
+  VITE_PLUS_WORKSPACE,
 } from './shared.ts';
 import { TOOLS, VERSIONS } from './versions.ts';
 
-// Single-package repo: pnpm-workspace.yaml carries the supply-chain rules only.
+// Single-package repo: pnpm-workspace.yaml carries the supply-chain rules and
+// the vite-plus toolchain only.
 const PNPM_WORKSPACE = `blockExoticSubdeps: true
 
 minimumReleaseAge: 10080
@@ -27,6 +30,9 @@ verifyDepsBeforeRun: install
 saveExact: true
 autoInstallPeers: false
 
+catalog:
+${VITE_PLUS_CATALOG}
+${VITE_PLUS_WORKSPACE}
 versioning:
   changelog:
     storage: repository
@@ -249,7 +255,7 @@ export const produceLibrary = (options: GenerateOptions) => {
       '@k8o/oxc-config': VERSIONS['@k8o/oxc-config'],
       '@types/node': VERSIONS['@types/node'],
       typescript: VERSIONS.typescript,
-      'vite-plus': VERSIONS['vite-plus'],
+      'vite-plus': 'catalog:',
     },
     engines: {
       node: '>=24.13.0',
