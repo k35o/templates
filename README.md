@@ -27,13 +27,14 @@ post-scaffold network steps.
 
 ## Kinds
 
-| `--kind`  | Emits                                                                            |
-| --------- | -------------------------------------------------------------------------------- |
-| `library` | Single-package TypeScript library (`vp pack` → ESM + `.d.mts`).                  |
-| `web`     | Monorepo: `packages/<name>` React lib + `apps/playground`, on @k8o/arte-odyssey. |
+| `--kind`  | Emits                                                                                      |
+| --------- | ------------------------------------------------------------------------------------------ |
+| `library` | Single-package TypeScript library (`vp pack` → ESM + `.d.mts`).                            |
+| `web`     | Monorepo: `packages/<name>` React lib + `apps/playground`, on @k8ordo/ui with CSS Modules. |
 
-Both generated repos pass `check` (fmt + lint), `typecheck`, `test`, and `build`
-out of the box.
+Both generated repos pass `check` (fmt + lint, plus the
+[better-css-modules](https://github.com/k35o/better-css-modules) check for
+`web`), `typecheck`, `test`, and `build` out of the box.
 
 ## What gets generated
 
@@ -59,14 +60,15 @@ out of the box.
 
 ```
 <name>/
-├─ packages/<name>/        # publishable React lib (uses @k8o/arte-odyssey)
+├─ packages/<name>/        # publishable React lib (uses @k8ordo/ui)
 │  ├─ src/index.ts
-│  ├─ src/components/hello.tsx
+│  ├─ src/components/{hello.tsx, hello.test.tsx}
 │  ├─ src/helpers/{cn.ts, cn.test.ts}
 │  └─ package.json  tsconfig.json  vite.config.ts
 ├─ apps/playground/        # private Vite app to preview the stack
-│  ├─ src/{main.tsx, app.tsx, styles.css, vite-env.d.ts}
+│  ├─ src/{main.tsx, app.tsx, app.module.css, styles.css, vite-env.d.ts}
 │  └─ index.html  package.json  tsconfig.json  vite.config.ts
+│     better-css-modules.config.ts
 ├─ .github/{composite-actions, workflows}
 ├─ package.json  pnpm-workspace.yaml (catalog)  tsconfig.json  vite.config.ts
 ├─ commitlint.config.js  .gitignore  .npmrc  mise.toml  renovate.json

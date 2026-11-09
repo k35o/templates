@@ -7,10 +7,13 @@ import {
   MISE_TOML,
   NPMRC,
   RELEASE_YML,
+  VITE_PLUS_CATALOG,
+  VITE_PLUS_WORKSPACE,
 } from './shared.ts';
 import { TOOLS, VERSIONS } from './versions.ts';
 
-// Single-package repo: pnpm-workspace.yaml carries the supply-chain rules only.
+// Single-package repo: pnpm-workspace.yaml carries the supply-chain rules and
+// the vite-plus toolchain only.
 const PNPM_WORKSPACE = `blockExoticSubdeps: true
 
 minimumReleaseAge: 10080
@@ -27,6 +30,9 @@ verifyDepsBeforeRun: install
 saveExact: true
 autoInstallPeers: false
 
+catalog:
+${VITE_PLUS_CATALOG}
+${VITE_PLUS_WORKSPACE}
 versioning:
   changelog:
     storage: repository
@@ -56,13 +62,13 @@ const TSCONFIG = `{
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "vite-plus/test/globals"]
+    "types": ["node"]
   },
   "include": ["src/**/*", "tests/**/*", "vite.config.ts"]
 }
 `;
 
-const VITE_CONFIG = `import { fmt, test, typescript } from '@k8o/oxc-config';
+const VITE_CONFIG = `import { fmt, test, TEST_GLOBS, typescript } from '@k8o/oxc-config';
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -78,13 +84,7 @@ export default defineConfig({
     options: {
       typeAware: true,
     },
-    overrides: [
-      {
-        files: ['tests/**/*.test.ts'],
-        plugins: [...(test.plugins ?? [])],
-        rules: test.rules ?? {},
-      },
-    ],
+    overrides: [{ files: [...TEST_GLOBS], ...test }],
   },
   pack: {
     entry: ['src/index.ts'],
@@ -94,7 +94,6 @@ export default defineConfig({
     unbundle: true,
   },
   test: {
-    globals: true,
     include: ['tests/**/*.test.ts'],
   },
   staged: {
@@ -195,7 +194,9 @@ const RENOVATE = `{
 const SRC_INDEX = `export const hello = (name: string): string => \`Hello, \${name}!\`;
 `;
 
-const TEST_INDEX = `import { hello } from '../src/index.ts';
+const TEST_INDEX = `import { expect, test } from 'vite-plus/test';
+
+import { hello } from '../src/index.ts';
 
 test('hello greets by name', () => {
   expect(hello('world')).toBe('Hello, world!');
@@ -249,7 +250,7 @@ export const produceLibrary = (options: GenerateOptions) => {
       '@k8o/oxc-config': VERSIONS['@k8o/oxc-config'],
       '@types/node': VERSIONS['@types/node'],
       typescript: VERSIONS.typescript,
-      'vite-plus': VERSIONS['vite-plus'],
+      'vite-plus': 'catalog:',
     },
     engines: {
       node: '>=24.13.0',

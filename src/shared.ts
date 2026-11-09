@@ -4,7 +4,7 @@
 // live in ./library.ts and ./web.ts.
 // ---------------------------------------------------------------------------
 
-import { TOOLS } from './versions.ts';
+import { TOOLS, VERSIONS } from './versions.ts';
 
 export type GenerateOptions = {
   name: string;
@@ -40,6 +40,25 @@ coverage
 .vscode/*
 !.vscode/extensions.json
 settings.local.json
+.vitest/
+`;
+
+// vite-plus ships Vite as @voidzero-dev/vite-plus-core. The catalog points
+// `vite` at that core, the override makes every package in the graph that asks
+// for vite get it too, and the peer rule accepts the core's own version number
+// where a package peers on vite ^8. This is the layout `vp migrate` writes.
+export const VITE_PLUS_CATALOG = `  vite: npm:@voidzero-dev/vite-plus-core@${VERSIONS['vite-plus']}
+  vite-plus: ${VERSIONS['vite-plus']}
+`;
+
+export const VITE_PLUS_WORKSPACE = `overrides:
+  vite@*: 'catalog:'
+
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: '*'
 `;
 
 export const MISE_TOML = `[tools]

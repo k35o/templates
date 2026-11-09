@@ -28,8 +28,7 @@ export default defineConfig({
     // JavaScript (bingo / zod stay external and are installed as deps).
     entry: ['bin/index.ts'],
     format: 'esm',
-    // The package ships only a bin, so .d.ts output is dead weight — and the
-    // dts tooling only supports typescript ^5 || ^6 while this repo is on 7.
+    // The package ships only a bin, so .d.ts output is dead weight.
     dts: false,
     outDir: 'dist',
   },
