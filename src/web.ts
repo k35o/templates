@@ -243,11 +243,12 @@ const PKG_TSCONFIG = `{
 }
 `;
 
-const PKG_VITE_CONFIG = `import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite-plus';
+// No @vitejs/plugin-react here: the library runs no dev server to refresh, and
+// Vite compiles its JSX on its own. TypeScript 7 also overflows comparing the
+// plugin's Plugin type (from vite) with the one vite-plus's defineConfig takes.
+const PKG_VITE_CONFIG = `import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
-  plugins: [react()],
   pack: {
     entry: ['src/**/*.{ts,tsx}', '!src/**/*.test.{ts,tsx}'],
     format: 'esm',
@@ -500,7 +501,6 @@ export const produceWeb = (options: GenerateOptions) => {
       '@k8ordo/ui': 'catalog:',
       '@types/react': 'catalog:',
       '@types/react-dom': 'catalog:',
-      '@vitejs/plugin-react': 'catalog:',
       react: 'catalog:',
       'react-dom': 'catalog:',
       'vite-plus': 'catalog:',

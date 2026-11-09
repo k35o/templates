@@ -36,7 +36,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=react-dom
   'react-dom': '19.3.0',
   // renovate: datasource=npm depName=typescript
-  typescript: '6.0.3',
+  typescript: '7.0.2',
   // renovate: datasource=npm depName=vite
   vite: '8.3.0',
   // renovate: datasource=npm depName=vite-plus
