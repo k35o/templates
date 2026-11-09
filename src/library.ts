@@ -62,13 +62,13 @@ const TSCONFIG = `{
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "vite-plus/test/globals"]
+    "types": ["node"]
   },
   "include": ["src/**/*", "tests/**/*", "vite.config.ts"]
 }
 `;
 
-const VITE_CONFIG = `import { fmt, test, typescript } from '@k8o/oxc-config';
+const VITE_CONFIG = `import { fmt, test, TEST_GLOBS, typescript } from '@k8o/oxc-config';
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -84,13 +84,7 @@ export default defineConfig({
     options: {
       typeAware: true,
     },
-    overrides: [
-      {
-        files: ['tests/**/*.test.ts'],
-        plugins: [...(test.plugins ?? [])],
-        rules: test.rules ?? {},
-      },
-    ],
+    overrides: [{ files: [...TEST_GLOBS], ...test }],
   },
   pack: {
     entry: ['src/index.ts'],
@@ -100,7 +94,6 @@ export default defineConfig({
     unbundle: true,
   },
   test: {
-    globals: true,
     include: ['tests/**/*.test.ts'],
   },
   staged: {
@@ -201,7 +194,9 @@ const RENOVATE = `{
 const SRC_INDEX = `export const hello = (name: string): string => \`Hello, \${name}!\`;
 `;
 
-const TEST_INDEX = `import { hello } from '../src/index.ts';
+const TEST_INDEX = `import { expect, test } from 'vite-plus/test';
+
+import { hello } from '../src/index.ts';
 
 test('hello greets by name', () => {
   expect(hello('world')).toBe('Hello, world!');

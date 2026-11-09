@@ -14,37 +14,37 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@better-css-modules/vite
   '@better-css-modules/vite': '0.4.1',
   // renovate: datasource=npm depName=@commitlint/cli
-  '@commitlint/cli': '21.2.2',
+  '@commitlint/cli': '21.2.4',
   // renovate: datasource=npm depName=@commitlint/config-conventional
-  '@commitlint/config-conventional': '21.2.2',
+  '@commitlint/config-conventional': '21.2.4',
   // renovate: datasource=npm depName=@k8o/oxc-config
-  '@k8o/oxc-config': '0.3.0',
+  '@k8o/oxc-config': '1.1.0',
   // renovate: datasource=npm depName=@k8ordo/i18n
   '@k8ordo/i18n': '2.3.1',
   // renovate: datasource=npm depName=@k8ordo/ui
   '@k8ordo/ui': '2.3.1',
   // renovate: datasource=npm depName=@types/node
-  '@types/node': '26.6.1',
+  '@types/node': '26.6.6',
   // renovate: datasource=npm depName=@types/react
   '@types/react': '19.3.0',
   // renovate: datasource=npm depName=@types/react-dom
   '@types/react-dom': '19.3.0',
   // renovate: datasource=npm depName=@vitejs/plugin-react
-  '@vitejs/plugin-react': '6.1.1',
+  '@vitejs/plugin-react': '6.2.1',
   // renovate: datasource=npm depName=react
-  react: '19.3.0',
+  react: '19.3.1',
   // renovate: datasource=npm depName=react-dom
-  'react-dom': '19.3.0',
+  'react-dom': '19.3.1',
   // renovate: datasource=npm depName=typescript
   typescript: '7.0.2',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '1.0.0',
+  'vite-plus': '1.4.0',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
 export const TOOLS = {
   // renovate: datasource=node-version depName=node
-  node: '24.22.1',
+  node: '24.22.2',
   // renovate: datasource=npm depName=pnpm
-  pnpm: '12.8.2',
+  pnpm: '12.17.0',
 } as const;

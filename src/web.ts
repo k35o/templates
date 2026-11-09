@@ -88,13 +88,13 @@ const TSCONFIG = `{
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "vite-plus/test/globals"]
+    "types": ["node"]
   }
 }
 `;
 
 // Root config drives fmt + lint for the whole monorepo.
-const ROOT_VITE_CONFIG = `import { fmt, react, test } from '@k8o/oxc-config';
+const ROOT_VITE_CONFIG = `import { fmt, react, test, TEST_GLOBS } from '@k8o/oxc-config';
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
@@ -113,13 +113,7 @@ export default defineConfig({
     settings: {
       react: { version: '${VERSIONS.react}' },
     },
-    overrides: [
-      {
-        files: ['**/*.test.{ts,tsx}'],
-        plugins: [...(test.plugins ?? [])],
-        rules: test.rules ?? {},
-      },
-    ],
+    overrides: [{ files: [...TEST_GLOBS], ...test }],
   },
   staged: {
     '*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc}': 'vp check --fix',
@@ -257,7 +251,6 @@ export default defineConfig({
     unbundle: true,
   },
   test: {
-    globals: true,
     include: ['src/**/*.test.{ts,tsx}'],
     // @k8ordo/ui's components import their CSS, which Node cannot load.
     // Inlining it runs it through Vite, which handles the CSS imports.
@@ -274,7 +267,9 @@ const PKG_CN = `export const cn = (
 ): string => classes.filter(Boolean).join(' ');
 `;
 
-const PKG_CN_TEST = `import { cn } from './cn.ts';
+const PKG_CN_TEST = `import { expect, test } from 'vite-plus/test';
+
+import { cn } from './cn.ts';
 
 test('cn joins truthy class names', () => {
   expect(cn('a', false, 'b', null, undefined, 'c')).toBe('a b c');
@@ -300,6 +295,7 @@ export const Hello: FC<HelloProps> = ({ name }) => (
 `;
 
 const PKG_HELLO_TEST = `import { renderToString } from 'react-dom/server';
+import { expect, test } from 'vite-plus/test';
 
 import { Hello } from './hello.tsx';
 
