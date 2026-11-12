@@ -1,5 +1,39 @@
 # @k8o/create
 
+## 0.3.0
+
+### Minor Changes
+
+- Generated repos start on newer toolchain versions: vite-plus 1.4.0, @k8o/oxc-config 1.1.0, pnpm 12.17.0, Node.js 24.22.2, React 19.3.1, @vitejs/plugin-react 6.2.1, commitlint 21.2.4 and @types/node 26.6.6. @k8o/oxc-config 1.x expects Vitest's `globals` off, so the sample tests import `expect` / `test` from `vite-plus/test`, `globals` and the `vite-plus/test/globals` types are gone, and the lint override applies the `test` layer to `TEST_GLOBS`.
+
+- Generated projects use TypeScript 7.0.2, the version @k8ordo/ui and @k8ordo/i18n ask for as a peer. The `web` kind's library package drops `@vitejs/plugin-react`: it runs no dev server, and under TypeScript 7 the plugin's types no longer check against vite-plus's `defineConfig`.
+
+- The `web` kind builds on @k8ordo/ui instead of @k8o/arte-odyssey. The library package depends on `@k8ordo/ui` (peer `>=2`), and the playground drops Tailwind CSS for CSS Modules held to the @k8ordo/ui tokens by better-css-modules, whose type generation and check run in `typecheck` and `check`.
+
+### Patch Changes
+
+- Pin generated projects to Node.js 24.22.1. Scaffolded projects were pinned to 24.21.0, which still trusts eMudhra's compromised TLS intermediates (EM DV/OV/EV TLS CA - G3B and G3C, and their AAA cross-signs); 24.22.1 is the release that stops trusting them.
+
+- Pin generated projects to Node.js 26.13.1. 26.13.1 is the November 11, 2026 security release: it fixes seven high-severity HTTP/2 and TLS vulnerabilities that earlier 24.x and 26.x releases still carry. Generated web projects now require `>=26.13.1`; generated libraries, and `@k8o/create` itself, accept any Node.js 24 or later (`>=24`).
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Update bundled dependencies via Renovate.
+
+- Generated repos resolve `vite` to vite-plus's own core, the layout `vp migrate` writes: the catalog points `vite` at `@voidzero-dev/vite-plus-core`, an override hands that core to every package that asks for `vite`, and a peer rule accepts its version number. Installs no longer warn that Vitest's `vite` peer is unmet. The web playground runs on `vp dev` / `vp build` with vite-plus's `defineConfig`, and `.vitest/`, where Vitest 5 writes attachments and reports, is ignored.
+
 ## 0.2.9
 
 ### Patch Changes
