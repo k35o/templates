@@ -253,7 +253,7 @@ export const produceLibrary = (options: GenerateOptions) => {
       'vite-plus': 'catalog:',
     },
     engines: {
-      node: '>=24.13.0',
+      node: '>=24',
     },
     packageManager: `pnpm@${TOOLS.pnpm}`,
   };
