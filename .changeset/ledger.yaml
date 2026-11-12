@@ -29,3 +29,20 @@
   intents:
     - renovate-43
     - renovate-45
+"@k8o/create@0.3.0":
+  dir: ""
+  intents:
+    - bump-generated-versions
+    - generated-node-24-22-1
+    - generated-node-26-13-1
+    - generated-typescript-7
+    - renovate-48
+    - renovate-49
+    - renovate-51
+    - renovate-53
+    - renovate-54
+    - renovate-57
+    - renovate-59
+    - renovate-63
+    - vite-plus-core-layout
+    - web-k8ordo-ui
