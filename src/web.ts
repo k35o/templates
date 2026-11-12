@@ -449,7 +449,7 @@ export const produceWeb = (options: GenerateOptions) => {
       'vite-plus': 'catalog:',
     },
     engines: {
-      node: '>=24.13.0',
+      node: '>=26.13.1',
     },
     packageManager: `pnpm@${TOOLS.pnpm}`,
   };
