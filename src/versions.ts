@@ -38,7 +38,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=typescript
   typescript: '7.0.2',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '1.4.0',
+  'vite-plus': '1.5.0',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
