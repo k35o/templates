@@ -22,7 +22,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@k8ordo/i18n
   '@k8ordo/i18n': '2.3.1',
   // renovate: datasource=npm depName=@k8ordo/ui
-  '@k8ordo/ui': '2.3.1',
+  '@k8ordo/ui': '3.0.0',
   // renovate: datasource=npm depName=@types/node
   '@types/node': '26.6.6',
   // renovate: datasource=npm depName=@types/react
