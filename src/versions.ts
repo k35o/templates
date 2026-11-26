@@ -20,7 +20,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@k8o/oxc-config
   '@k8o/oxc-config': '1.1.0',
   // renovate: datasource=npm depName=@k8ordo/i18n
-  '@k8ordo/i18n': '2.3.1',
+  '@k8ordo/i18n': '3.0.0',
   // renovate: datasource=npm depName=@k8ordo/ui
   '@k8ordo/ui': '2.3.1',
   // renovate: datasource=npm depName=@types/node
