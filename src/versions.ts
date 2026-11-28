@@ -8,11 +8,11 @@
 
 export const VERSIONS = {
   // renovate: datasource=npm depName=@better-css-modules/cli
-  '@better-css-modules/cli': '0.4.1',
+  '@better-css-modules/cli': '0.5.0',
   // renovate: datasource=npm depName=@better-css-modules/core
-  '@better-css-modules/core': '0.4.1',
+  '@better-css-modules/core': '0.5.0',
   // renovate: datasource=npm depName=@better-css-modules/vite
-  '@better-css-modules/vite': '0.4.1',
+  '@better-css-modules/vite': '0.5.0',
   // renovate: datasource=npm depName=@commitlint/cli
   '@commitlint/cli': '21.2.4',
   // renovate: datasource=npm depName=@commitlint/config-conventional
@@ -30,7 +30,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=@types/react-dom
   '@types/react-dom': '19.3.0',
   // renovate: datasource=npm depName=@vitejs/plugin-react
-  '@vitejs/plugin-react': '6.2.1',
+  '@vitejs/plugin-react': '6.3.0',
   // renovate: datasource=npm depName=react
   react: '19.3.1',
   // renovate: datasource=npm depName=react-dom
@@ -38,7 +38,7 @@ export const VERSIONS = {
   // renovate: datasource=npm depName=typescript
   typescript: '7.0.2',
   // renovate: datasource=npm depName=vite-plus
-  'vite-plus': '1.4.0',
+  'vite-plus': '1.7.0',
 } as const;
 
 // Toolchain versions for the generated `mise.toml` + `packageManager` field.
